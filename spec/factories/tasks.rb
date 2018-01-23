@@ -3,7 +3,7 @@ FactoryBot.define do
     association :user
     name 'Complete homework'
     priority 1
-    due_date {DateTime.now + 2.days }
+    due_date { DateTime.now + 2.days }
   end
 
   factory :email, class: Task do
@@ -17,6 +17,6 @@ FactoryBot.define do
     association :user
     name nil
     priority nil
-    due_date nil
+    due_date { DateTime.now }
   end
 end

@@ -25,7 +25,7 @@ RSpec.describe Task, type: :model do
   end
 
   it 'will return false on save without a due date' do
-    task = build(:email, due_date:nil)
+    task = build(:email, due_date: nil)
 
     expect(task.save).to eq(false)
   end
@@ -33,6 +33,5 @@ RSpec.describe Task, type: :model do
   it 'belongs to a user' do
     expect(Task.reflect_on_association(:user).macro).to eq(:belongs_to)
   end
-
 
 end

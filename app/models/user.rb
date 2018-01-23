@@ -1,18 +1,16 @@
 class User < ApplicationRecord
   has_many :tasks
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates_presence_of :first_name, :last_name, :email
+  validates_uniqueness_of :email
 
   def full_name
     "#{first_name} #{last_name}"
   end
 
   def due_today
-    self.tasks.select { |task| task.due_date.localtime.to_date ==
-    DateTime.now.to_date }
-
+    # self.tasks.select { |task| task.due_date.to_date == DateTime.now.in_time_zone('UTC').to_date }
+    self.tasks.select { |task| task.due_date.localtime.to_date == DateTime.now.to_date }
   end
 
 end
