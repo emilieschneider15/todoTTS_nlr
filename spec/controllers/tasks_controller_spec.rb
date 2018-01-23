@@ -93,7 +93,6 @@ RSpec.describe TasksController, type: :controller do
         }.not_to change(Task, :count)
       end
 
-
       it 're-renders the :new template' do
         post :create, params: { task: invalid_attributes }
 
@@ -128,7 +127,7 @@ RSpec.describe TasksController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'does not update the task' do
+      it 'should stay the same' do
         patch :update, params: { id: task.to_param, task: invalid_attributes }
         expect(assigns(:task)).to eq(task)
       end
@@ -137,6 +136,24 @@ RSpec.describe TasksController, type: :controller do
         patch :update, params: { id: task.to_param, task: invalid_attributes }
         expect(response).to render_template(:edit)
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let(:task) { build(:homework) }
+
+    it 'destroys the requested task' do
+      task.save
+      expect {
+        delete :destroy, params: { id: task.to_param }
+      }.to change(Task, :count).by(-1)
+    end
+
+    it 'redirects to tasks index view' do
+      task.save
+      delete :destroy, params: { id: task.to_param }
+
+      expect(response).to redirect_to(tasks_path)
     end
   end
 
